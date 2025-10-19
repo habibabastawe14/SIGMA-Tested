@@ -1,0 +1,24 @@
+id: vyxEbpABdEckT3CrZxru
+logsource:
+  product: windows
+title: AD_Group_Enumeration_With_Get-AdGroup
+description: >-
+  Detects usage of the Get-AdGroup cmdlet to enumerate Groups within Active
+  Directory
+tags:
+  - attack.discovery
+  - attack.t1069.002
+falsepositives:
+  - Unknown
+level: medium
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md
+author: Kareem Tahoun
+detection:
+  selection:
+    powershell.file.script_block_text|contains|all:
+      - 'Get-AdGroup '
+      - '-Filter'
+  condition: selection
