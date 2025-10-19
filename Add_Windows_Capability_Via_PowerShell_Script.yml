@@ -1,0 +1,29 @@
+id: g3hxOpABdEckT3Crm2ad
+logsource:
+  product: windows
+title: Add_Windows_Capability_Via_PowerShell_Script
+description: >-
+  Detects usage of the Add-WindowsCapability cmdlet to add Windows capabilities.
+  Notable capabilities could be OpenSSH and others.
+tags:
+  - attack.execution
+falsepositives:
+  - >-
+    Legitimate usage of the capabilities by administrators or users. Add
+    additional filters accordingly.
+level: medium
+status: test
+references:
+  - >-
+    https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=powershell
+  - >-
+    https://www.virustotal.com/gui/file/af1c82237b6e5a3a7cdbad82cc498d298c67845d92971bada450023d1335e267/content
+author: Kareem Tahoun
+detection:
+  condition: selection_cmdlet and selection_capa
+  selection_cmdlet:
+    powershell.file.script_block_text|contains:
+      - 'Add-WindowsCapability '
+  selection_capa:
+    powershell.file.script_block_text|contains:
+      - '-Name OpenSSH.'
