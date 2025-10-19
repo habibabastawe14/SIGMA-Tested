@@ -1,0 +1,32 @@
+id: PCk7bpABdEckT3Crj4je
+logsource:
+  product: windows
+title: AD_Computers_Enumeration_With_Get-AdComputer
+description: >-
+  Detects usage of the Get-AdComputer to enumerate Computers or properties
+  within Active Directory.
+tags:
+  - attack.discovery
+  - attack.t1018
+  - attack.t1087.002
+falsepositives:
+  - Unknown
+level: medium
+status: test
+references:
+  - >-
+    https://learn.microsoft.com/en-us/powershell/module/activedirectory/get-adcomputer
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/02cb591f75064ffe1e0df9ac3ed5972a2e491c97/atomics/T1087.002/T1087.002.md
+author: Kareem Tahoun
+detection:
+  selection_cmdlet:
+    powershell.file.script_block_text|contains: 'Get-AdComputer '
+  selection_option:
+    powershell.file.script_block_text|contains:
+      - '-Filter '
+      - '-LDAPFilter '
+      - '-Properties '
+  condition: all of selection_*
