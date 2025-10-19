@@ -1,0 +1,23 @@
+id: Soj18I4BBPPWSuEyEB8a
+logsource:
+  product: windows
+title: 6_Defense_Evasion_Windows_set_powershell_Policy
+description: >-
+  Detects changes to the PowerShell execution policy in order to bypass signing
+  requirements for script execution
+tags:
+  - attack.defense_evasion
+falsepositives:
+  - Unknown
+level: medium
+status: experimental
+references:
+  - >-
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.3
+author: Abdelrhman Shaban
+detection:
+  condition: selection
+  selection:
+    process.command_line|contains:
+      - \ShellIds\Microsoft.PowerShell\ExecutionPolicy
+      - \Policies\Microsoft\Windows\PowerShell\ExecutionPolicy
