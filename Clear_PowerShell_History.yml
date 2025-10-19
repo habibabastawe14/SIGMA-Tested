@@ -1,0 +1,34 @@
+id: 87U-QpABdEckT3CrWGLh
+logsource:
+  product: windows
+title: Clear_PowerShell_History
+description: Detects keywords that could indicate clearing PowerShell history
+tags:
+  - attack.defense_evasion
+  - attack.t1070.003
+falsepositives:
+  - Legitimate PowerShell scripts
+level: medium
+status: test
+references:
+  - 'https://gist.github.com/hook-s3c/7363a856c3cdbadeb71085147f042c1a'
+author: Kareem Tahoun
+detection:
+  selection1a:
+    powershell.file.script_block_text|contains:
+      - del
+      - Remove-Item
+      - rm
+  selection1b:
+    powershell.file.script_block_text|contains: (Get-PSReadlineOption).HistorySavePath
+  selection_2:
+    powershell.file.script_block_text|contains|all:
+      - Set-PSReadlineOption
+      - –HistorySaveStyle
+      - SaveNothing
+  selection_3:
+    powershell.file.script_block_text|contains|all:
+      - Set-PSReadlineOption
+      - '-HistorySaveStyle'
+      - SaveNothing
+  condition: 1 of selection_* or all of selection1*
