@@ -1,0 +1,31 @@
+id: JWroL5ABdEckT3Cr1Z5g
+logsource:
+  product: windows
+title: Potential_AD_Enumeration_Using_AD_Module
+description: >-
+  Detects usage of the Import-Module cmdlet to load the
+  Microsoft.ActiveDirectory.Management.dl DLL. Which is often used by attackers
+  to perform AD enumeration.
+tags:
+  - attack.reconnaissance
+  - attack.discovery
+  - attack.impact
+falsepositives:
+  - Legitimate use of the library for administrative activity
+level: medium
+status: test
+references:
+  - 'https://github.com/samratashok/ADModule'
+  - 'https://twitter.com/cyb3rops/status/1617108657166061568?s=20'
+  - >-
+    https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/active-directory-enumeration-with-ad-module-without-rsat-or-admin-privileges
+author: Kareem Tahoun
+detection:
+  condition: selection_generic or selection_specific
+  selection_generic:
+    powershell.file.script_block_text|contains|all:
+      - Import-Module
+      - Microsoft.ActiveDirectory.Management.dll
+  selection_specific:
+    powershell.file.script_block_text|contains:
+      - ipmo Microsoft.ActiveDirectory.Management.dll
