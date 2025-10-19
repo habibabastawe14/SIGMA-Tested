@@ -1,0 +1,27 @@
+id: Vvl3tZEBdEckT3CrWnQH
+logsource:
+  product: windows
+title: New Process Created Via Wmic
+description: Detects new process creation using WMIC via the process call create flag
+tags:
+  - attack.execution
+  - attack.t1047
+falsepositives:
+  - Unknown
+level: medium
+status: test
+references:
+  - 'https://www.sans.org/blog/wmic-for-incident-response/'
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/84215139ee5127f8e3a117e063b604812bd71928/atomics/T1047/T1047.md#atomic-test-5---wmi-execute-local-process
+author: Kareem Tahoun
+detection:
+  selection_img:
+    - process.file.path|endswith: \WMIC.exe
+    - process.name: WMIC.exe
+  selection_cli:
+    process.command_line|contains|all:
+      - process
+      - call
+      - create
+  condition: all of selection_*
