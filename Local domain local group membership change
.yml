@@ -1,0 +1,36 @@
+id: ErQfBY8B8wescUGA2rf2
+logsource:
+  product: windows
+title: Local domain local group membership change
+description: Detects scenarios where a suspicious group membership is changed.
+tags:
+  - attack.persistence
+  - attack.t1098
+falsepositives:
+  - Administrator activity
+level: high
+status: experimental
+references:
+  - >-
+    https://github.com/mdecrevoisier/EVTX-to-MITRE-Attack/tree/master/TA0003-Persistence/T1098.xxx-Account%20manipulation
+  - 'https://ss64.com/nt/syntax-groups.html'
+  - >-
+    https://docs.microsoft.com/en-us/windows/security/identity-protection/access-control/security-identifiers
+author: mdecrevoisier
+detection:
+  condition: selection and not filter
+  selection:
+    event.code:
+      - 4732
+    winlog.event_data.TargetSid|startswith:
+      - S-1-5-32
+    winlog.event_data.TargetSid|endswith:
+      - '-544'
+      - '-547'
+      - '-548'
+      - '-549'
+      - '-551'
+      - '-578'
+  filter:
+    winlog.event_data.SubjectUserSid:
+      - S-1-5-18
