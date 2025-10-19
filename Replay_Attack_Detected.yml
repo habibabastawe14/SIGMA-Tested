@@ -1,0 +1,24 @@
+id: SY-XBpABdEckT3CrkPEb
+logsource:
+  product: windows
+title: Replay_Attack_Detected
+description: >-
+  Detects possible Kerberos Replay Attack on the domain controllers when
+  KRB_AP_ERR_REPEAT Kerberos response is sent to the client
+tags:
+  - attack.credential_access
+  - attack.t1558
+falsepositives:
+  - Unknown
+level: high
+status: test
+references:
+  - >-
+    https://github.com/Yamato-Security/EnableWindowsLogSettings/blob/7f6d755d45ac7cc9fc35b0cbf498e6aa4ef19def/ConfiguringSecurityLogAuditPolicies.md
+  - >-
+    https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4649
+author: Kareem Tahoun
+detection:
+  selection:
+    winlog.event_id: 4649
+  condition: selection
