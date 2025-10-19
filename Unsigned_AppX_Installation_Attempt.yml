@@ -1,0 +1,27 @@
+id: 9neBeJABdEckT3Crn601
+logsource:
+  product: windows
+title: Unsigned_AppX_Installation_Attempt
+description: >-
+  Detects usage of the Add-AppxPackage or its alias Add-AppPackage to install
+  unsigned AppX packages
+tags:
+  - attack.persistence
+  - attack.defense_evasion
+falsepositives:
+  - Installation of unsigned packages for testing purposes
+level: medium
+status: test
+references:
+  - 'https://learn.microsoft.com/en-us/windows/msix/package/unsigned-package'
+  - 'https://twitter.com/WindowsDocs/status/1620078135080325122'
+author: Kareem Tahoun
+detection:
+  condition: selection_cmdlet and selection_flag
+  selection_cmdlet:
+    powershell.file.script_block_text|contains:
+      - Add-AppPackage
+      - Add-AppxPackage
+  selection_flag:
+    powershell.file.script_block_text|contains:
+      - '-AllowUnsigned'
