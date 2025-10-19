@@ -1,0 +1,16 @@
+id: vcCXLI4BlaeYfjSdeOgl
+logsource:
+  product: windows
+title: For Testing Only Monitor Specific User Login
+description: For Testing Only Monitor Specific User Login
+tags: []
+falsepositives: []
+level: low
+status: test
+references: []
+author: Abdel
+detection:
+  condition: Selection_1
+  Selection_1:
+    winlog.user.name|all:
+      - Security.Meter
