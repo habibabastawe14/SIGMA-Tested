@@ -1,0 +1,31 @@
+id: 5tTWSZABdEckT3Crv0NO
+logsource:
+  product: windows
+title: Detect_Virtualization_Environment
+description: >-
+  Adversaries may employ various system checks to detect and avoid
+  virtualization and analysis environments. This may include changing behaviors
+  based on the results of checks for the presence of artifacts indicative of a
+  virtual machine environment VME or sandbox
+tags:
+  - attack.defense_evasion
+  - attack.t1497.001
+falsepositives:
+  - Unknown
+level: medium
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1497.001/T1497.001.md
+  - 'https://techgenix.com/malicious-powershell-scripts-evade-detection/'
+author: Kareem Tahoun
+detection:
+  selection_action:
+    powershell.file.script_block_text|contains:
+      - Get-WmiObject
+      - gwmi
+  selection_module:
+    powershell.file.script_block_text|contains:
+      - MSAcpi_ThermalZoneTemperature
+      - Win32_ComputerSystem
+  condition: all of selection*
