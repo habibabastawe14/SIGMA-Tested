@@ -1,0 +1,21 @@
+id: EgoaYZABdEckT3CrGqVG
+logsource:
+  product: windows
+title: In-Memory_Execution_Using_Reflection_Assembly
+description: >-
+  Detects usage of Reflection.Assembly load functions to dynamically load
+  assemblies in memory
+tags:
+  - attack.defense_evasion
+  - attack.t1620
+falsepositives:
+  - Legitimate use of the library
+level: medium
+status: test
+references:
+  - 'https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=50'
+author: Kareem Tahoun
+detection:
+  selection:
+    powershell.file.script_block_text|contains: '[Reflection.Assembly]::load'
+  condition: selection
