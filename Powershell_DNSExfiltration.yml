@@ -1,0 +1,28 @@
+id: An6geJABdEckT3CrYpXb
+logsource:
+  product: windows
+title: Powershell_DNSExfiltration
+description: >-
+  DNSExfiltrator allows for transferring exfiltrate a file over a DNS request
+  covert channel
+tags:
+  - attack.exfiltration
+  - attack.t1048
+falsepositives:
+  - Legitimate script
+level: high
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048/T1048.md#atomic-test-3---dnsexfiltration-doh
+  - 'https://github.com/Arno0x/DNSExfiltrator'
+author: Kareem Tahoun
+detection:
+  condition: selection_cmdlet
+  selection_cmdlet:
+    - powershell.file.script_block_text|contains: Invoke-DNSExfiltrator
+    - powershell.file.script_block_text|contains|all:
+        - ' -i '
+        - ' -d '
+        - ' -p '
+        - ' -t '
