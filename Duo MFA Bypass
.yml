@@ -1,0 +1,20 @@
+id: tN4hco4BkSkDMt4MtWH-
+logsource:
+  product: duo
+title: Duo MFA Bypass
+description: Duo MFA Bypass
+tags: []
+falsepositives: []
+level: medium
+status: experimental
+references: []
+author: Abdelrahman Yassin
+detection:
+  condition: Selection_1 and not Selection_2
+  Selection_1:
+    activity_name|contains:
+      - bypass_user
+  Selection_2:
+    actor.user.name|contains:
+      - net.app
+      - streams
