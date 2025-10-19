@@ -1,0 +1,18 @@
+id: igyKGZIBdEckT3CrvRh_
+logsource:
+  product: windows
+title: Detect Mimikatz Usage
+description: Detect Mimikatz Usage
+tags: []
+falsepositives: []
+level: high
+status: experimental
+references: []
+author: Kareem Tahoun
+detection:
+  condition: selection
+  selection:
+    process.command_line|contains:
+      - 'sekurlsa::minidump'
+      - 'sekurlsa::logonpasswords'
+      - 'privilege::debug'
