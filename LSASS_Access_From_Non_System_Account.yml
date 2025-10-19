@@ -1,0 +1,53 @@
+id: TIqs648B13klLU7Qg9D7
+logsource:
+  product: windows
+title: LSASS_Access_From_Non_System_Account
+description: Detects potential mimikatz-like tools accessing LSASS from non system account
+tags:
+  - attack.credential_access
+  - attack.t1003.001
+falsepositives:
+  - Unknown
+level: medium
+status: test
+references:
+  - >-
+    https://threathunterplaybook.com/hunts/windows/170105-LSASSMemoryReadAccess/notebook.html
+author: Kareem Tahoun
+detection:
+  selection:
+    winlog.event_id:
+      - 4663
+      - 4656
+    winlog.event_data.AccessMask:
+      - '0x100000'
+      - '0x1010'
+      - '0x1400'
+      - '0x1410'
+      - '0x1418'
+      - '0x1438'
+      - '0x143a'
+      - '0x1f0fff'
+      - '0x1f1fff'
+      - '0x1f2fff'
+      - '0x1f3fff'
+      - '0x40'
+      - 143a
+      - 1f0fff
+      - 1f1fff
+      - 1f2fff
+      - 1f3fff
+    winlog.event_data.ObjectType: Process
+    winlog.event_data.ObjectName|endswith: \lsass.exe
+  filter_main_service_account:
+    winlog.event_data.SubjectUserName|endswith: $
+  filter_main_generic:
+    winlog.event_data.ProcessName|contains:
+      - ':\Program Files\'
+      - ':\Program Files (x86)\'
+  filter_main_wmiprvse:
+    winlog.event_data.ProcessName: 'C:\Windows\System32\wbem\WmiPrvSE.exe'
+    winlog.event_data.AccessMask: '0x1410'
+  filter_optional_steam:
+    winlog.event_data.ProcessName|contains: \SteamLibrary\steamapps\
+  condition: selection and not 1 of filter_main_* and not 1 of filter_optional_*
