@@ -1,0 +1,36 @@
+id: K6-885EBdEckT3CrajRC
+logsource:
+  product: windows
+title: Suspicious Download Via Certutil
+description: Suspicious Download Via certutil.exe
+tags:
+  - attack.defense-evasion
+  - attack.t1027
+falsepositives: []
+level: medium
+status: experimental
+references:
+  - >-
+    https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/certutil
+  - 'https://forensicitguy.github.io/agenttesla-vba-certutil-download/'
+  - >-
+    https://news.sophos.com/en-us/2021/04/13/compromised-exchange-server-hosting-cryptojacker-targeting-other-exchange-servers/
+  - 'https://twitter.com/egre55/status/1087685529016193025'
+  - 'https://lolbas-project.github.io/lolbas/Binaries/Certutil/'
+author: Kareem Tahoun
+detection:
+  condition: selection_1 and selection_2 and selection_3
+  selection_1:
+    process.name:
+      - certutil.exe
+    process.file.path|endswith:
+      - \certutil.exe
+  selection_2:
+    process.command_line|contains:
+      - urlcache
+      - verifyctl
+      - split
+  selection_3:
+    process.command_line|contains:
+      - http
+      - https
