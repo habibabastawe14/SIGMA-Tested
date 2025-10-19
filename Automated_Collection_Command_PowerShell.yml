@@ -1,0 +1,36 @@
+id: ebEtQpABdEckT3Cr9bs1
+logsource:
+  product: windows
+title: Automated_Collection_Command_PowerShell
+description: >-
+  Once established within a system or network, an adversary may use automated
+  techniques for collecting internal data.
+tags:
+  - attack.collection
+  - attack.t1119
+falsepositives:
+  - Unknown
+level: medium
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1119/T1119.md
+author: Kareem Tahoun
+detection:
+  condition: selection_ext and selection_cmd
+  selection_ext:
+    powershell.file.script_block_text|contains:
+      - .doc
+      - .docx
+      - .xls
+      - .xlsx
+      - .ppt
+      - .pptx
+      - .rtf
+      - .pdf
+      - .txt
+  selection_cmd:
+    powershell.file.script_block_text|contains|all:
+      - Get-ChildItem
+      - ' -Recurse '
+      - ' -Include '
