@@ -1,0 +1,26 @@
+id: hXvT4ZEBdEckT3CrOmEB
+logsource:
+  product: windows
+title: Remote System Discovery
+description: >-
+  Adversaries may attempt to get a listing of other systems by IP address,
+  hostname, or other logical identifier on a network.
+tags: []
+falsepositives: []
+level: high
+status: experimental
+references: []
+author: Abdelrahman
+detection:
+  condition: Selection_1 or Selection_2 or Selection_3
+  Selection_1:
+    winlog.image|endswith:
+      - ping.exe
+    winlog_image|endswith:
+      - tracert.exe
+  Selection_2:
+    winlog.event_id|contains:
+      - '4663'
+  Selection_3:
+    winlog.event_id|contains:
+      - '4104'
