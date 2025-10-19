@@ -1,0 +1,31 @@
+id: 3TF9DpABdEckT3Crgazi
+logsource:
+  product: windows
+title: Use_of_W32tm_as_Timer
+description: >-
+  When configured with suitable command line arguments, w32tm can act as a delay
+  mechanism
+tags:
+  - attack.discovery
+  - attack.t1124
+falsepositives:
+  - Legitimate use
+level: high
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/d0dad62dbcae9c60c519368e82c196a3db577055/atomics/T1124/T1124.md
+  - >-
+    https://blogs.blackberry.com/en/2022/05/dirty-deeds-done-dirt-cheap-russian-rat-offers-backdoor-bargains
+author: Kareem Tahoun
+detection:
+  selection_w32tm:
+    - process.file.path|endswith: \w32tm.exe
+  selection_cmd:
+    process.command_line|contains|all:
+      - /stripchart
+      - '/computer:'
+      - '/period:'
+      - /dataonly
+      - '/samples:'
+  condition: all of selection_*
