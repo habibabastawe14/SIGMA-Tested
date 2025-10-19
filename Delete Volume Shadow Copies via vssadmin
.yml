@@ -1,0 +1,22 @@
+id: UFIXy5EBdEckT3CrkxvU
+logsource:
+  product: windows
+title: Delete Volume Shadow Copies via vssadmin
+description: Detects the use of vssadmin.exe to delete all volume shadow copies
+tags:
+  - attack.impact
+  - attack.t1490
+  - attack.t1089
+falsepositives: []
+level: high
+status: experimental
+references: []
+author: Kareem Tahoun
+detection:
+  condition: selection and Selection_2
+  selection:
+    process.file.path|endswith:
+      - \vssadmin.exe
+  Selection_2:
+    process.command_line|contains:
+      - delete
