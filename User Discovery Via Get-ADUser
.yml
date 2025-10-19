@@ -1,0 +1,24 @@
+id: 1u9KGZIBdEckT3Cr23eY
+logsource:
+  product: windows
+title: User Discovery  Via Get-ADUser
+description: >-
+  Detects usage of the Get-ADUser cmdlet to collect user information and output
+  it to a file
+tags:
+  - attack.discovery
+  - attack.t1033
+falsepositives: []
+level: medium
+status: test
+references:
+  - 'http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html'
+  - >-
+    https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/
+author: Kareem Tahoun
+detection:
+  condition: selection
+  selection:
+    powershell.file.script_block_text|contains|all:
+      - 'Get-ADUser '
+      - ' -Filter *'
