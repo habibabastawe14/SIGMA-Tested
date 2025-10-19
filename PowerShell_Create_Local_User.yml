@@ -1,0 +1,22 @@
+id: MdPHSZABdEckT3CrBdjf
+logsource:
+  product: windows
+title: PowerShell_Create_Local_User
+description: Detects creation of a local user via PowerShell
+tags:
+  - attack.execution
+  - attack.t1059.001
+  - attack.persistence
+  - attack.t1136.001
+falsepositives:
+  - Legitimate user creation
+level: medium
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1136.001/T1136.001.md
+author: Kareem Tahoun
+detection:
+  selection:
+    powershell.file.script_block_text|contains: New-LocalUser
+  condition: selection
