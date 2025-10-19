@@ -1,0 +1,29 @@
+id: OjwOxZEBdEckT3CrHeVx
+logsource:
+  product: windows
+title: Suspicious Usage of PuTTY
+description: >-
+  Detects suspicious usage of PuTTY pscp-plink that could be indicative of data
+  exfiltration.
+tags:
+  - attack.exfiltration
+  - attack.t1048.003
+  - attack.command_and_control
+falsepositives:
+  - Legitimate remote file transfers or administrative use of PuTTY
+level: high
+status: experimental
+references: []
+author: Kareem Tahoun
+detection:
+  condition: Selection_1 or Selection_2
+  Selection_1:
+    process.file.path|endswith:
+      - \pscp.exe
+    process.name|contains:
+      - pscp.exe
+  Selection_2:
+    process.file.path|endswith:
+      - \putty.exe
+    process.name|contains:
+      - putty.exe
