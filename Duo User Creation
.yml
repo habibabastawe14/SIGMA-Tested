@@ -1,0 +1,18 @@
+id: REEFq44BMPcRb8kRS0PV
+logsource:
+  product: duo
+title: Duo User Creation
+description: Duo User Creation
+tags: []
+falsepositives: []
+level: low
+status: experimental
+references: []
+author: Abdelrahman Yassin
+detection:
+  condition: Selection_1
+  Selection_1:
+    activity_name|contains:
+      - admin_create
+    category|contains:
+      - administrator
