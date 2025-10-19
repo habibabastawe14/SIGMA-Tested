@@ -1,0 +1,26 @@
+id: obfnwY8B13klLU7Q1QMK
+logsource:
+  product: windows
+title: Create_Volume_Shadow_Copy_with_Powershell
+description: >-
+  Adversaries may attempt to access or create a copy of the Active Directory
+  domain database in order to steal credential information
+tags:
+  - attack.credential_access
+  - attack.t1003.003
+falsepositives:
+  - Legitimate PowerShell scripts
+level: high
+status: test
+references:
+  - 'https://attack.mitre.org/datasources/DS0005/'
+  - >-
+    https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject?view=powershell-5.1&viewFallbackFrom=powershell-7
+author: Kareem Tahoun
+detection:
+  condition: selection
+  selection:
+    powershell.file.script_block_text|contains|all:
+      - win32_shadowcopy
+      - Create
+      - ClientAccessible
