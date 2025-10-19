@@ -1,0 +1,21 @@
+id: vtWkLY4BlaeYfjSdOg9H
+logsource:
+  product: duo
+title: Enrollment From Outside Egypt
+description: Enrollment From Outside Egypt
+tags: []
+falsepositives: []
+level: low
+status: experimental
+references: []
+author: Abdelrahman Yassin
+detection:
+  condition: not Selection_1 and Selection_2
+  Selection_1:
+    auth_device.location.country|contains:
+      - Egypt
+      - 'null'
+      - '-'
+  Selection_2:
+    actor.user.groups|contains:
+      - admin
