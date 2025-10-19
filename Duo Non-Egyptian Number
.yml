@@ -1,0 +1,19 @@
+id: Teovco4BkSkDMt4M1eZw
+logsource:
+  product: duo
+title: Duo Non-Egyptian Number
+description: Duo Non-Egyptian Number
+tags: []
+falsepositives: []
+level: medium
+status: experimental
+references: []
+author: Abdelrahman Yassin
+detection:
+  condition: Selection_1 and not Selection_2
+  Selection_1:
+    activity_name|contains:
+      - phone_update
+  Selection_2:
+    phone_number|startswith:
+      - '+20'
