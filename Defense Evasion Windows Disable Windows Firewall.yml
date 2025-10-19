@@ -1,0 +1,24 @@
+id: D3bd8I4BBPPWSuEyp7Zo
+logsource:
+  product: windows
+title: 3_Defense_Evasion_Windows_Disable_Windows_Firewall
+description: Detect set EnableFirewall to 0 to disable the Windows firewall
+tags:
+  - attack.defense_evasion
+  - attack.t1562.004
+falsepositives:
+  - Unknown
+level: medium
+status: experimental
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1562.004/T1562.004.md
+author: Abdelrhman Shaban
+detection:
+  condition: selection
+  selection:
+    process.command_line|contains:
+      - SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile
+      - SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile
+      - SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile
+      - SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile
