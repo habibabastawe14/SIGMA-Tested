@@ -1,0 +1,22 @@
+id: xomJfZABdEckT3CrOhne
+logsource:
+  product: windows
+title: Invoke-Obfuscation_VAR_Launcher
+description: Detects Obfuscated use of Environment Variables to execute PowerShell
+tags:
+  - attack.defense_evasion
+  - attack.t1027
+  - attack.execution
+  - attack.t1059.001
+falsepositives:
+  - Unknown
+level: high
+status: test
+references:
+  - 'https://github.com/SigmaHQ/sigma/issues/1009'
+author: Kareem Tahoun
+detection:
+  selection_4104:
+    powershell.file.script_block_text|re: >-
+      cmd.{0,5}(?:/c|/r)(?:\s|)"set\s[a-zA-Z]{3,6}.*(?:\{\d\}){1,}\\"\s+?-f(?:.*\)){1,}.*"
+  condition: selection_4104
