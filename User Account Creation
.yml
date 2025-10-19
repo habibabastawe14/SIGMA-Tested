@@ -1,0 +1,16 @@
+id: b_yitZEBdEckT3Cr6Khe
+logsource:
+  product: windows
+title: User Account Creation
+description: Detects the creation of a new user account on a Windows system.
+tags: []
+falsepositives: []
+level: medium
+status: stable
+references: []
+author: Kareem Tahoun
+detection:
+  condition: Selection_1
+  Selection_1:
+    winlog.event_id|contains:
+      - '4720'
