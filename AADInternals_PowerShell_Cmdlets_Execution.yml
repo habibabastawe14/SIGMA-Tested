@@ -1,0 +1,47 @@
+id: 0F-iL5ABdEckT3CrWAq5
+logsource:
+  product: windows
+title: AADInternals_PowerShell_Cmdlets_Execution
+description: >-
+  Detects ADDInternals Cmdlet execution. A tool for administering Azure AD and
+  Office 365. Which can be abused by threat actors to attack Azure AD or Office
+  365.
+tags:
+  - attack.execution
+  - attack.reconnaissance
+  - attack.discovery
+  - attack.credential_access
+  - attack.impact
+falsepositives:
+  - Legitimate use of the library for administrative activity
+level: high
+status: test
+references:
+  - 'https://o365blog.com/aadinternals/'
+  - 'https://github.com/Gerenios/AADInternals'
+author: Kareem Tahoun
+detection:
+  condition: selection
+  selection:
+    powershell.file.script_block_text|contains:
+      - Add-AADInt
+      - ConvertTo-AADInt
+      - Disable-AADInt
+      - Enable-AADInt
+      - Export-AADInt
+      - Get-AADInt
+      - Grant-AADInt
+      - Install-AADInt
+      - Invoke-AADInt
+      - Join-AADInt
+      - New-AADInt
+      - Open-AADInt
+      - Read-AADInt
+      - Register-AADInt
+      - Remove-AADInt
+      - Restore-AADInt
+      - Search-AADInt
+      - Send-AADInt
+      - Set-AADInt
+      - Start-AADInt
+      - Update-AADInt
