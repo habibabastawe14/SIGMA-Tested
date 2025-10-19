@@ -1,0 +1,30 @@
+id: u2OVc5ABdEckT3CrXHEu
+logsource:
+  product: windows
+title: ICMP_Exfiltration
+description: >-
+  Detects Exfiltration Over Alternative Protocol - ICMP. Adversaries may steal
+  data by exfiltrating it over an un-encrypted network protocol other than that
+  of the existing command and control channel.
+tags:
+  - attack.exfiltration
+  - attack.t1048.003
+falsepositives:
+  - Legitimate usage of System.Net.NetworkInformation.Ping class
+level: medium
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048.003/T1048.003.md#atomic-test-2---exfiltration-over-alternative-protocol---icmp
+author: Kareem Tahoun
+detection:
+  condition: selection and Selection_2 and Selection_3
+  selection:
+    powershell.file.script_block_text|contains:
+      - New-Object
+  Selection_2:
+    powershell.file.script_block_text|contains:
+      - System.Net.Networkinformation.ping
+  Selection_3:
+    powershell.file.script_block_text|contains:
+      - Send
