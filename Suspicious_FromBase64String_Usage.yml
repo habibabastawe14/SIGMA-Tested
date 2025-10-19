@@ -1,0 +1,25 @@
+id: EyERa5ABdEckT3Cr86ow
+logsource:
+  product: windows
+title: Suspicious_FromBase64String_Usage
+description: >-
+  Detects attempts of decoding a base64 Gzip archive in a PowerShell script.
+  This technique is often used as a method to load malicious content into memory
+  afterward.
+tags:
+  - attack.command_and_control
+  - attack.t1132.001
+falsepositives:
+  - Legitimate administrative script
+level: medium
+status: test
+references:
+  - 'https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=43'
+author: Kareem Tahoun
+detection:
+  selection:
+    powershell.file.script_block_text|contains|all:
+      - FromBase64String
+      - MemoryStream
+      - H4sI
+  condition: selection
