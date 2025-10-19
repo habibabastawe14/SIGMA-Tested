@@ -1,0 +1,26 @@
+id: jBHMY5ABdEckT3Cr2KkY
+logsource:
+  product: windows
+title: Enable_Windows_Remote_Management
+description: >-
+  Adversaries may use Valid Accounts to interact with remote systems using
+  Windows Remote Management WinRM. The adversary may then perform actions as the
+  logged on user.
+tags:
+  - attack.lateral_movement
+  - attack.t1021.006
+falsepositives:
+  - Legitimate script
+level: medium
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.006/T1021.006.md#atomic-test-1---enable-windows-remote-management
+  - >-
+    https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7.2
+author: Kareem Tahoun
+detection:
+  condition: selection_cmdlet
+  selection_cmdlet:
+    powershell.file.script_block_text|contains:
+      - 'Enable-PSRemoting '
