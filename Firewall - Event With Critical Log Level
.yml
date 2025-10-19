@@ -1,0 +1,16 @@
+id: RrorOI4BlaeYfjSdqTm9
+logsource:
+  product: firewall
+title: Firewall - Event With Critical Log Level
+description: Firewall - Event With Critical Log Level
+tags: []
+falsepositives: []
+level: medium
+status: experimental
+references: []
+author: Abdelrahman Yassin
+detection:
+  condition: Selection_1
+  Selection_1:
+    level|contains:
+      - critical
