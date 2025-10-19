@@ -1,0 +1,37 @@
+id: 4honaZABdEckT3CreM3v
+logsource:
+  product: windows
+title: Suspicious_Windows_Feature_Enabled
+description: >-
+  Detects usage of the built-in PowerShell cmdlet Enable-WindowsOptionalFeature
+  used as a Deployment Image Servicing and Management tool. Similar to DISM.exe,
+  this cmdlet is used to enumerate, install, uninstall, configure, and update
+  features and packages in Windows images
+tags:
+  - attack.defense_evasion
+falsepositives:
+  - Legitimate usage of the features listed in the rule.
+level: medium
+status: test
+references:
+  - >-
+    https://docs.microsoft.com/en-us/powershell/module/dism/enable-windowsoptionalfeature?view=windowsserver2022-ps
+  - >-
+    https://learn.microsoft.com/en-us/windows/win32/projfs/enabling-windows-projected-file-system
+  - 'https://learn.microsoft.com/en-us/windows/wsl/install-on-server'
+author: frack113
+detection:
+  selection_cmd:
+    powershell.file.script_block_text|contains|all:
+      - Enable-WindowsOptionalFeature
+      - '-Online'
+      - '-FeatureName'
+  selection_feature:
+    powershell.file.script_block_text|contains:
+      - TelnetServer
+      - Internet-Explorer-Optional-amd64
+      - TFTP
+      - SMB1Protocol
+      - Client-ProjFS
+      - Microsoft-Windows-Subsystem-Linux
+  condition: all of selection_*
