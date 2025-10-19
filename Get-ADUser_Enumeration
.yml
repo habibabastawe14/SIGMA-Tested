@@ -35,3 +35,6 @@ detection:
   Selection_5:
     powershell.file.script_block_text|contains:
       - '4194304'
+
+
+      
