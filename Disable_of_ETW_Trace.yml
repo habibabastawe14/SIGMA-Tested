@@ -1,0 +1,26 @@
+id: 8xw6aZABdEckT3Crkp8B
+logsource:
+  product: windows
+title: Disable_of_ETW_Trace
+description: Detects usage of powershell cmdlets to disable or remove ETW trace sessions
+tags:
+  - attack.defense_evasion
+  - attack.t1070
+  - attack.t1562.006
+falsepositives:
+  - Unknown
+level: high
+status: test
+references:
+  - >-
+    https://medium.com/palantir/tampering-with-windows-event-tracing-background-offense-and-defense-4be7ac62ac63
+author: Kareem Tahoun
+detection:
+  condition: selection_pwsh_remove or selection_pwsh_set
+  selection_pwsh_remove:
+    powershell.file.script_block_text|contains:
+      - Remove-EtwTraceProvider
+  selection_pwsh_set:
+    powershell.file.script_block_text|contains|all:
+      - Set-EtwTraceProvider
+      - '0x11'
