@@ -1,0 +1,18 @@
+id: uAjkO44BlaeYfjSdkJCo
+logsource:
+  product: edr
+title: Detections With Severity Higher Than Medium
+description: Detections With Severity Higher Than Medium
+tags: []
+falsepositives: []
+level: critical
+status: experimental
+references: []
+author: Abdelrahman Yassin
+detection:
+  condition: Selection_1
+  Selection_1:
+    event.Severity|contains:
+      - '4'
+      - '5'
+      - '6'
