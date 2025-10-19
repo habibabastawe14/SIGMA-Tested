@@ -1,0 +1,23 @@
+id: CUZLc5ABdEckT3CrNP2t
+logsource:
+  product: windows
+title: Hotfix_Enumeration
+description: >-
+  Detects call to Win32_QuickFixEngineering in order to enumerate installed
+  hotfixes often used in enum scripts by attackers
+tags:
+  - attack.discovery
+falsepositives:
+  - Legitimate administration scripts
+level: medium
+status: test
+references:
+  - >-
+    https://github.com/411Hall/JAWS/blob/233f142fcb1488172aa74228a666f6b3c5c48f1d/jaws-enum.ps1
+author: Kareem Tahoun
+detection:
+  selection:
+    powershell.file.script_block_text|contains|all:
+      - Win32_QuickFixEngineering
+      - HotFixID
+  condition: selection
