@@ -1,0 +1,51 @@
+id: _zXNcpABdEckT3CrOLBw
+logsource:
+  product: windows
+title: Security_Software_Discovery
+description: >-
+  Detects calls to get-process where the output is piped to a where-object
+  filter to search for security solution processes. Adversaries may attempt to
+  get a listing of security software, configurations, defensive tools, and
+  sensors that are installed on a system or in a cloud environment. This may
+  include things such as firewall rules and anti-virus
+tags:
+  - attack.discovery
+  - attack.t1518.001
+falsepositives:
+  - >-
+    False positives might occur due to the nature of the ScriptBlock being
+    ingested as a big blob. Initial tuning is required.
+  - >-
+    As the "selection_cmdlet" is common in scripts the matching engine might
+    slow down the search. Change into regex or a more accurate string to avoid
+    heavy resource consumption if experienced
+level: medium
+status: experimental
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518.001/T1518.001.md#atomic-test-2---security-software-discovery---powershell
+author: Kareem Tahoun
+detection:
+  condition: selection_cmdlet and selection_field and selection_keywords
+  selection_cmdlet:
+    powershell.file.script_block_text|contains:
+      - get-process
+      - gps
+  selection_field:
+    powershell.file.script_block_text|contains:
+      - Company
+      - Description
+      - Name
+      - Path
+      - Product
+  selection_keywords:
+    powershell.file.script_block_text|contains:
+      - avira
+      - carbonblack
+      - cylance
+      - defender
+      - kaspersky
+      - malware
+      - sentinel
+      - symantec
+      - virus
