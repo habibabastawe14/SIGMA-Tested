@@ -1,0 +1,25 @@
+id: rMsDR5ABdEckT3Cr5TEp
+logsource:
+  product: windows
+title: Install_a_DLL_in_System_Directory
+description: >-
+  Uses PowerShell to install copy a file into a system directory such as
+  System32 or SysWOW64
+tags:
+  - attack.credential_access
+  - attack.t1556.002
+falsepositives:
+  - Unknown
+level: high
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1556.002/T1556.002.md#atomic-test-1---install-and-register-password-filter-dll
+author: Kareem Tahoun
+detection:
+  condition: selection
+  selection:
+    powershell.file.script_block_text|re:
+      - >-
+        (Copy-Item|cpi) .{2,128} -Destination
+        .{1,32}\\Windows\\(System32|SysWOW64)
