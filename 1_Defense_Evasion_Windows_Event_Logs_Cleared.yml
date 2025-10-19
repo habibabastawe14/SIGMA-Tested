@@ -1,0 +1,20 @@
+id: oVnxa40B3Uw7N-hP02-R
+logsource:
+  product: windows
+title: 1_Defense_Evasion_Windows_Event_Logs_Cleared
+description: One of the Windows Eventlogs has been cleared
+tags:
+  - attack.defense_evasion
+  - attack.t1070.001
+falsepositives: []
+level: high
+status: stable
+references: []
+author: Abdelrahman Yassin
+detection:
+  condition: selection
+  selection:
+    event.code:
+      - 104
+    event.action|contains:
+      - Log clear
