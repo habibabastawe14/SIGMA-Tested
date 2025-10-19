@@ -1,0 +1,32 @@
+id: P5GlO5ABdEckT3CryoA3
+logsource:
+  product: windows
+title: AMSI_Bypass_Pattern_Assembly_GetType
+description: >-
+  Detects code fragments found in small and obfuscated AMSI bypass PowerShell
+  scripts
+tags:
+  - attack.defense_evasion
+  - attack.t1562.001
+  - attack.execution
+falsepositives:
+  - Unknown
+level: high
+status: test
+references:
+  - >-
+    https://www.mdsec.co.uk/2018/06/exploring-powershell-amsi-and-logging-evasion/
+  - >-
+    https://twitter.com/cyb3rops/status/1588574518057979905?s=20&t=A7hh93ONM7ni1Rj1jO5OaA
+author: Kareem Tahoun
+detection:
+  condition: selection and Selection_2 and Selection_3
+  selection:
+    powershell.file.script_block_text|contains:
+      - '[Ref].Assembly.GetType'
+  Selection_2:
+    powershell.file.script_block_text|contains:
+      - 'SetValue($null,$true)'
+  Selection_3:
+    powershell.file.script_block_text|contains:
+      - 'NonPublic,Static'
