@@ -1,0 +1,21 @@
+id: kJDPfZABdEckT3Crvd6C
+logsource:
+  product: windows
+title: Invoke-Obfuscation_Via_Use_Clip
+description: Detects Obfuscated Powershell via use Clip.exe in Scripts
+tags:
+  - attack.defense_evasion
+  - attack.t1027
+  - attack.execution
+  - attack.t1059.001
+falsepositives:
+  - Unknown
+level: high
+status: test
+references:
+  - 'https://github.com/SigmaHQ/sigma/issues/1009'
+author: 'Nikita Nazarov, oscd.community'
+detection:
+  selection_4104:
+    powershell.file.script_block_text|re: (?i)echo.*clip.*&&.*(Clipboard|i`?n`?v`?o`?k`?e`?)
+  condition: selection_4104
