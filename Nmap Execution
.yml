@@ -1,0 +1,26 @@
+id: YTTRwJEBdEckT3Cr51hg
+logsource:
+  product: windows
+title: Nmap Execution
+description: >-
+  Detects usage of namp. Adversaries may attempt to get a listing of services
+  running on remote hosts, including those that may be vulnerable to remote
+  software exploitation
+tags:
+  - attack.discovery
+  - attack.t1046
+falsepositives: []
+level: medium
+status: test
+references:
+  - 'https://nmap.org/'
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1046/T1046.md#atomic-test-3---port-scan-nmap-for-windows
+author: Kareem Tahoun
+detection:
+  selection:
+    - process.file.path|endswith:
+        - \nmap.exe
+    - process.name:
+        - nmap.exe
+  condition: selection
