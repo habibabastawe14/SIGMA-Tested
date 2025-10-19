@@ -1,0 +1,24 @@
+id: arI1QpABdEckT3CrtI9m
+logsource:
+  product: windows
+title: Windows_Screen_Capture_with_CopyFromScreen
+description: >-
+  Adversaries may attempt to take screen captures of the desktop to gather
+  information over the course of an operation. Screen capturing functionality
+  may be included as a feature of a remote access tool used in post-compromise
+  operations
+tags:
+  - attack.collection
+  - attack.t1113
+falsepositives:
+  - Unknown
+level: medium
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1113/T1113.md#atomic-test-6---windows-screen-capture-copyfromscreen
+author: frack113
+detection:
+  selection:
+    powershell.file.script_block_text|contains: .CopyFromScreen
+  condition: selection
