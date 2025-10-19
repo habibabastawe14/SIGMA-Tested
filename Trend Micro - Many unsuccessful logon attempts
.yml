@@ -1,0 +1,24 @@
+id: FpSzWI8BjFu2jTtD9VbM
+logsource:
+  product: tm
+title: Trend Micro - Many unsuccessful logon attempts
+description: Trend Micro - Many unsuccessful logon attempts
+tags: []
+falsepositives: []
+level: medium
+status: experimental
+references: []
+author: Abdelrahman Yassin
+detection:
+  condition: Selection_1 and not Selection_2
+  Selection_1:
+    finding_info_title|contains:
+      - Many unsuccessful logon attempts
+  Selection_2:
+    severity_id|contains:
+      - '0'
+      - '1'
+      - '2'
+      - '3'
+      - '4'
+      - '5'
