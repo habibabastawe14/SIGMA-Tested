@@ -1,0 +1,22 @@
+id: l70vx48B13klLU7QQJP9
+logsource:
+  product: windows
+title: Invocation_of_Active_Directory_Diagnostic
+description: >-
+  Detects execution of ntdsutil.exe, which can be used for various attacks
+  against the NTDS database NTDS.DIT
+tags:
+  - attack.credential_access
+  - attack.t1003.003
+falsepositives:
+  - NTDS maintenance
+level: medium
+status: test
+references:
+  - 'https://jpcertcc.github.io/ToolAnalysisResultSheet/details/ntdsutil.htm'
+author: Kareem Tahoun
+detection:
+  condition: selection
+  selection:
+    process.file.path|endswith:
+      - \ntdsutil.exe
