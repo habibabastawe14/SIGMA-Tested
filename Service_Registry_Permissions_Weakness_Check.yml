@@ -1,0 +1,28 @@
+id: CCYtbpABdEckT3CrCp8_
+logsource:
+  product: windows
+title: Service_Registry_Permissions_Weakness_Check
+description: >-
+  Adversaries may execute their own malicious payloads by hijacking the Registry
+  entries used by services. Adversaries may use flaws in the permissions for
+  registry to redirect from the originally specified executable to one that they
+  control, in order to launch their own code at Service start.
+tags:
+  - attack.persistence
+  - attack.t1574.011
+falsepositives:
+  - Legitimate administrative script
+level: medium
+status: test
+references:
+  - >-
+    https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1574.011/T1574.011.md#atomic-test-1---service-registry-permissions-weakness
+  - >-
+    https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/get-acl?view=powershell-7.2
+author: Kareem Tahoun
+detection:
+  selection:
+    powershell.file.script_block_text|contains|all:
+      - get-acl
+      - 'REGISTRY::HKLM\SYSTEM\CurrentControlSet\Services\'
+  condition: selection
