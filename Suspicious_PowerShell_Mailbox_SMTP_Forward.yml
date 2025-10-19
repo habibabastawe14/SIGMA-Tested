@@ -1,0 +1,23 @@
+id: IR5haZABdEckT3CrXR9E
+logsource:
+  product: windows
+title: Suspicious_PowerShell_Mailbox_SMTP_Forward
+description: >-
+  Detects usage of the powerShell Set-Mailbox Cmdlet to set-up an SMTP
+  forwarding rule.
+tags:
+  - attack.exfiltration
+falsepositives:
+  - Legitimate usage of the cmdlet to forward emails
+level: medium
+status: test
+references:
+  - 'https://redcanary.com/blog/threat-detection/email-forwarding-rules/'
+author: Kareem Tahoun
+detection:
+  condition: selection
+  selection:
+    powershell.file.script_block_text|contains|all:
+      - Set-Mailbox
+      - '-DeliverToMailboxAndForward'
+      - '-ForwardingSmtpAddress'
